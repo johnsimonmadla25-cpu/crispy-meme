@@ -3,12 +3,11 @@ name: Build Android APK
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,13 +21,13 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
 
-      - name: Build Android APK
+      - name: Build APK
         run: |
-          chmod +x HA_Data_Entry_Android_Project/gradlew
-          HA_Data_Entry_Android_Project/gradlew -p HA_Data_Entry_Android_Project assembleDebug
+          cd HA_Data_Entry_Android_Project
+          gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: HA-Data-Entry-Tracker-APK
+          name: HA-Data-Entry-APK
           path: HA_Data_Entry_Android_Project/app/build/outputs/apk/debug/app-debug.apk
