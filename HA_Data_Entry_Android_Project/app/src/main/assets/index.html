@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HA Data Entry Daily Tracker</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#172033;padding:12px}
+.container{max-width:1100px;margin:auto}
+h2{margin:8px 0}
+.subtitle{color:#64748b;font-size:13px;margin-bottom:15px}
+.card{background:white;padding:16px;border-radius:12px;margin-bottom:14px;box-shadow:0 2px 8px #0000000d}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{font-size:13px;font-weight:bold;display:block;margin-bottom:5px}
+input,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;font-size:15px;background:white}
+button{padding:11px 14px;border:0;border-radius:7px;font-weight:bold;cursor:pointer;margin:4px 2px}
+.primary{background:#166534;color:white}
+.blue{background:#1d4ed8;color:white}
+.gray{background:#475569;color:white}
+.orange{background:#c2410c;color:white}
+.red{background:#b91c1c;color:white}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#eff6ff;padding:12px;border-radius:8px;text-align:center}
+.stat strong{display:block;font-size:22px;color:#1d4ed8}
+.stat span{font-size:12px;color:#475569}
+.actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1100px;font-size:12px}
+th,td{border:1px solid #e2e8f0;padding:8px;text-align:left;white-space:nowrap}
+th{background:#e2e8f0}
+tr:nth-child(even){background:#f8fafc}
+.small{font-size:12px;color:#64748b}
+@media(max-width:600px){
+ body{padding:8px}
+ .grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:repeat(3,1fr)}
+ .card{padding:12px}
+ button{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h2>HA DATA ENTRY DAILY TRACKER</h2>
+<div class="subtitle">Offline data entry system | Mobile friendly</div>
+
+<div class="card">
+<h3>Daily Summary</h3>
+<div class="stats">
+ <div class="stat"><strong id="totalCount">0</strong><span>All Records</span></div>
+ <div class="stat"><strong id="dateCount">0</strong><span>Selected Date</span></div>
+ <div class="stat"><strong id="todayCount">0</strong><span>Today's Entries</span></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Client Information</h3>
+<form id="entryForm">
+<div class="grid">
+
+<div>
+<label>DATE OF ENROLMENT *</label>
+<input type="date" id="enrolDate" required>
+</div>
+
+<div>
+<label>HEALTH ADVOCATE *</label>
+<select id="advocate" required>
+<option value="">Select Advocate</option>
+<option>SIMON</option>
+<option>JOHN</option>
+<option>MADLA</option>
+</select>
+</div>
+
+<div>
+<label>TEAM *</label>
+<select id="team" required>
+<option value="">Select Team</option>
+<option>TEAM 1</option>
+<option>TEAM 2</option>
+<option>TEAM 3</option>
+<option>TEAM 4</option>
+<option>TEAM 5</option>
+</select>
+</div>
+
+<div>
+<label>PHILHEALTH PIN *</label>
+<input id="pin" type="text" inputmode="numeric" maxlength="12"
+placeholder="12 digits only" pattern="[0-9]{12}" required>
+<div class="small">Any starting number from 0 to 9. Exactly 12 digits.</div>
+</div>
+
+<div>
+<label>LAST NAME *</label>
+<input id="lastName" required>
+</div>
+
+<div>
+<label>FIRST NAME *</label>
+<input id="firstName" required>
+</div>
+
+<div>
+<label>MIDDLE NAME</label>
+<input id="middleName">
+</div>
+
+<div>
+<label>SUFFIX</label>
+<select id="suffix">
+<option value="">Select Suffix</option>
+<option>JR</option><option>SR</option>
+<option>I</option><option>II</option>
+<option>III</option><option>IV</option>
+<option>V</option><option>N/A</option>
+</select>
+</div>
+
+<div>
+<label>PCU 1</label>
+<input id="pcu1" type="text" placeholder="P followed by 15 digits">
+</div>
+
+<div>
+<label>PCU 2</label>
+<input id="pcu2" type="text" placeholder="P followed by 15 digits">
+</div>
+
+<div>
+<label>BIRTHDATE</label>
+<input id="birthdate" type="date">
+</div>
+
+<div>
+<label>MEMBER TYPE</label>
+<select id="memberType">
+<option value="">Select Member Type</option>
+<option>MEMBER</option>
+<option>DEPENDENT</option>
+</select>
+</div>
+
+<div>
+<label>TRANSFER</label>
+<select id="transfer">
+<option value="">Select Status</option>
+<option>TRANSFER</option>
+<option>FOR CHECKING</option>
+</select>
+</div>
+
+<div>
+<label>EGOV / PMP</label>
+<select id="egov">
+<option value="">Select Status</option>
+<option>YES</option>
+<option>NO</option>
+<option>FOR CHECKING</option>
+</select>
+</div>
+
+<div>
+<label>EYOS</label>
+<select id="eyos">
+<option value="">Select Status</option>
+<option>YES</option>
+<option>NO</option>
+<option>FOR CHECKING</option>
+</select>
+</div>
+
+<div>
+<label>MOBILE NO.</label>
+<input id="mobile" type="tel" inputmode="tel" placeholder="Mobile number">
+</div>
+
+</div>
+
+<div class="actions">
+<button type="submit" class="primary">SAVE CLIENT</button>
+<button type="reset" class="gray">CLEAR FORM</button>
+</div>
+</form>
+</div>
+
+<div class="card">
+<h3>Search and Export</h3>
+<div class="grid">
+<div>
+<label>Filter by Enrolment Date</label>
+<input type="date" id="filterDate">
+</div>
+<div>
+<label>Search Client</label>
+<input type="search" id="searchBox" placeholder="Search PIN or name">
+</div>
+</div>
+
+<div class="actions">
+<button class="blue" onclick="exportCSV()">EXPORT EXCEL CSV</button>
+<button class="gray" onclick="exportFilteredCSV()">EXPORT SELECTED DATE</button>
+<button class="orange" onclick="backupJSON()">BACKUP DATA</button>
+<button class="blue" onclick="document.getElementById('restoreFile').click()">RESTORE BACKUP</button>
+<input type="file" id="restoreFile" accept=".json,application/json" hidden>
+<button class="red" onclick="deleteAll()">DELETE ALL RECORDS</button>
+</div>
+<p class="small">CSV files can be opened in Microsoft Excel. You can save them as .xlsx in Excel.</p>
+</div>
+
+<div class="card">
+<h3>Saved Client Records</h3>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th>Timestamp</th>
+<th>Enrolment Date</th>
+<th>Health Advocate</th>
+<th>Team</th>
+<th>PhilHealth PIN</th>
+<th>Last Name</th>
+<th>First Name</th>
+<th>Middle Name</th>
+<th>Suffix</th>
+<th>PCU 1</th>
+<th>PCU 2</th>
+<th>Birthdate</th>
+<th>Member Type</th>
+<th>Transfer</th>
+<th>EGOV/PMP</th>
+<th>EYOS</th>
+<th>Mobile No.</th>
+<th>Action</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+</div>
+
+<div class="small">
+Data is saved on this device and browser. Regularly use BACKUP DATA to protect your records.
+</div>
+
+</div>
+
+<script>
+const STORAGE_KEY = "HA_DAILY_TRACKER_RECORDS_V1";
+
+const fields = [
+"enrolDate","advocate","team","pin","lastName","firstName",
+"middleName","suffix","pcu1","pcu2","birthdate","memberType",
+"transfer","egov","eyos","mobile"
+];
+
+let records = [];
+
+try {
+ records = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+ if (!Array.isArray(records)) records = [];
+} catch(e) {
+ records = [];
+}
+
+function saveStorage(){
+ localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+}
+
+function value(id){
+ return document.getElementById(id).value.trim();
+}
+
+function today(){
+ const d = new Date();
+ const local = new Date(d.getTime() - d.getTimezoneOffset()*60000);
+ return local.toISOString().slice(0,10);
+}
+
+document.getElementById("enrolDate").value = today();
+
+document.getElementById("pin").addEventListener("input",function(){
+ this.value = this.value.replace(/\D/g,"").slice(0,12);
+});
+
+["pcu1","pcu2"].forEach(id=>{
+ document.getElementById(id).addEventListener("input",function(){
+  this.value = this.value.toUpperCase().replace(/[^P0-9]/g,"");
+ });
+});
+
+document.getElementById("entryForm").addEventListener("submit",function(e){
+ e.preventDefault();
+
+ const pin = value("pin");
+ if(!/^\d{12}$/.test(pin)){
+  alert("PhilHealth PIN must contain exactly 12 digits. Any starting number is allowed.");
+  return;
+ }
+
+ const pcu1 = value("pcu1");
+ const pcu2 = value("pcu2");
+
+ if(pcu1 && !/^P\d{15}$/.test(pcu1)){
+  alert("PCU 1 must start with P followed by exactly 15 digits.");
+  return;
+ }
+
+ if(pcu2 && !/^P\d{15}$/.test(pcu2)){
+  alert("PCU 2 must start with P followed by exactly 15 digits.");
+  return;
+ }
+
+ const birthdate = value("birthdate");
+ if(birthdate && birthdate > today()){
+  alert("Birthdate cannot be in the future.");
+  return;
+ }
+
+ const record = {
+  id: Date.now().toString() + Math.random().toString(16).slice(2),
+  timestamp: new Date().toLocaleString(),
+ };
+
+ fields.forEach(f => record[f] = value(f));
+
+ records.push(record);
+ saveStorage();
+ this.reset();
+ document.getElementById("enrolDate").value = today();
+ render();
+ alert("Client successfully saved!");
+});
+
+function escapeHTML(text){
+ return String(text ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function getFilteredRecords(){
+ const date = value("filterDate");
+ const search = value("searchBox").toLowerCase();
+
+ return records.filter(r=>{
+  const dateMatch = !date || r.enrolDate === date;
+  const allText = [
+   r.pin,r.lastName,r.firstName,r.middleName,
+   r.advocate,r.team,r.mobile
+  ].join(" ").toLowerCase();
+  return dateMatch && allText.includes(search);
+ });
+}
+
+function render(){
+ const filtered = getFilteredRecords();
+ const body = document.getElementById("recordsBody");
+
+ body.innerHTML = filtered.map(r=>`
+ <tr>
+ <td>${escapeHTML(r.timestamp)}</td>
+ <td>${escapeHTML(r.enrolDate)}</td>
+ <td>${escapeHTML(r.advocate)}</td>
+ <td>${escapeHTML(r.team)}</td>
+ <td>${escapeHTML(r.pin)}</td>
+ <td>${escapeHTML(r.lastName)}</td>
+ <td>${escapeHTML(r.firstName)}</td>
+ <td>${escapeHTML(r.middleName)}</td>
+ <td>${escapeHTML(r.suffix)}</td>
+ <td>${escapeHTML(r.pcu1)}</td>
+ <td>${escapeHTML(r.pcu2)}</td>
+ <td>${escapeHTML(r.birthdate)}</td>
+ <td>${escapeHTML(r.memberType)}</td>
+ <td>${escapeHTML(r.transfer)}</td>
+ <td>${escapeHTML(r.egov)}</td>
+ <td>${escapeHTML(r.eyos)}</td>
+ <td>${escapeHTML(r.mobile)}</td>
+ <td><button class="red" onclick="deleteRecord('${r.id}')">Delete</button></td>
+ </tr>
+ `).join("");
+
+ document.getElementById("totalCount").textContent = records.length;
+ document.getElementById("dateCount").textContent =
+  value("filterDate") ?
+  records.filter(r=>r.enrolDate===value("filterDate")).length :
+  filtered.length;
+ document.getElementById("todayCount").textContent =
+  records.filter(r=>r.enrolDate===today()).length;
+}
+
+function deleteRecord(id){
+ if(!confirm("Delete this client record?")) return;
+ records = records.filter(r=>r.id !== id);
+ saveStorage();
+ render();
+}
+
+function deleteAll(){
+ if(!confirm("WARNING: Delete ALL saved client records from this browser?")) return;
+ if(!confirm("Are you sure? Make a backup first if needed.")) return;
+ records = [];
+ saveStorage();
+ render();
+}
+
+function csvCell(v){
+ return '"' + String(v ?? "").replace(/"/g,'""') + '"';
+}
+
+const headers = [
+"Timestamp","DATE OF ENROLMENT","HEALTH ADVOCATE","TEAM",
+"PHILHEALTH PIN","LAST NAME","FIRST NAME","MIDDLE NAME",
+"SUFFIX","PCU 1","PCU 2","BIRTHDATE","MEMBER TYPE",
+"TRANSFER","EGOV/PMP","EYOS","MOBILE NO."
+];
+
+function makeCSV(list){
+ const rows = [headers];
+ list.forEach(r=>{
+  rows.push([
+   r.timestamp,r.enrolDate,r.advocate,r.team,r.pin,
+   r.lastName,r.firstName,r.middleName,r.suffix,
+   r.pcu1,r.pcu2,r.birthdate,r.memberType,
+   r.transfer,r.egov,r.eyos,r.mobile
+  ]);
+ });
+ return "\uFEFF" + rows.map(row=>row.map(csvCell).join(",")).join("\r\n");
+}
+
+function downloadFile(content,filename,type){
+ const blob = new Blob([content],{type:type});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = filename;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ URL.revokeObjectURL(url);
+}
+
+function exportCSV(){
+ if(!records.length){alert("No records to export.");return;}
+ downloadFile(makeCSV(records),"HA_ALL_CLIENT_RECORDS.csv","text/csv;charset=utf-8");
+}
+
+function exportFilteredCSV(){
+ const date = value("filterDate");
+ if(!date){alert("Please select an enrolment date first.");return;}
+ const list = records.filter(r=>r.enrolDate===date);
+ if(!list.length){alert("No records found for this date.");return;}
+ downloadFile(makeCSV(list),"HA_CLIENTS_"+date+".csv","text/csv;charset=utf-8");
+}
+
+function backupJSON(){
+ const backup = {
+  system:"HA DATA ENTRY DAILY TRACKER",
+  backupDate:new Date().toISOString(),
+  records:records
+ };
+ downloadFile(JSON.stringify(backup,null,2),
+  "HA_BACKUP_"+today()+".json","application/json");
+}
+
+document.getElementById("restoreFile").addEventListener("change",function(){
+ const file = this.files[0];
+ if(!file) return;
+
+ const reader = new FileReader();
+ reader.onload = function(){
+  try{
+   const data = JSON.parse(reader.result);
+   const imported = Array.isArray(data) ? data : data.records;
+   if(!Array.isArray(imported)) throw new Error("Invalid backup");
+
+   if(!confirm("Restore "+imported.length+" records? Existing records will be combined with the backup.")) return;
+
+   const existingIds = new Set(records.map(r=>r.id));
+   imported.forEach(r=>{
+    if(!r.id || !existingIds.has(r.id)){
+     if(!r.id) r.id = Date.now().toString()+Math.random().toString(16).slice(2);
+     records.push(r);
+    }
+   });
+
+   saveStorage();
+   render();
+   alert("Backup restored successfully.");
+  }catch(e){
+   alert("Invalid backup file.");
+  }
+ };
+ reader.readAsText(file);
+ this.value="";
+});
+
+document.getElementById("filterDate").addEventListener("change",render);
+document.getElementById("searchBox").addEventListener("input",render);
+
+render();
+</script>
+</body>
+</html>
